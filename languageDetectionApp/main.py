@@ -8,8 +8,7 @@ from faster_whisper import WhisperModel
 from iso639 import Lang
 
 
-
-input_video = "D:/Users/renat/Bureau/ESIR3/projetCloud/processDirectory/processaivoices2_2.mp4"
+input_video = "data/processaivoices2_2.mp4"
 input_video_name = input_video.split("/")[-1].replace(".mp4", "") # remove .mp4
 
 
