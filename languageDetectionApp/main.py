@@ -6,6 +6,7 @@ import ffmpeg
 from faster_whisper import WhisperModel
 
 from iso639 import Lang
+import os
 
 
 input_video = "data/processaivoices2_2.mp4"
@@ -31,6 +32,8 @@ def transcribe_audio(audio):
     for segment in segments:
             #print(segment)
         print("[%.2f - %.2f] %s" % (segment.start, segment.end, segment.text))
+    
+    os.remove(audio)
     return language,segments
 
 
