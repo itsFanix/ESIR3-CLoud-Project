@@ -44,8 +44,5 @@ def upload():
         connection.close()
         return render_template('result.html', video_path=processed_video_path)
     
-   
-
-
 if __name__== '__main__':
     app.run(debug=True)

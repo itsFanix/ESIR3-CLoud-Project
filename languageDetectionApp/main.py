@@ -8,13 +8,15 @@ import pika
 
 from retry import retry
 import logging
+import json
 
 
 
 logging.basicConfig(level=logging.INFO)
+
+#Metadata file formant
+metadata ={}
 #RabbitMQ connection
-
-
 @retry(delay=5, backoff=2, max_delay=60, logger=None)
 def connect_to_rabbitmq():
     connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
@@ -38,24 +40,53 @@ def transcribe_audio(audio):
     segments, info = model.transcribe(audio)
     language = info[0]
     language = Lang(language).name
-    
-
     segments = list(segments)
-    # for segment in segments:
-    #         #print(segment)
-    #     print("[%.2f - %.2f] %s" % (segment.start, segment.end, segment.text))
-    
+ 
     os.remove(audio)
     return language,segments
 
+def format_time(seconds):
+    hours = math.floor(seconds / 3600)
+    seconds %= 3600
+    minutes = math.floor(seconds / 60)
+    seconds %= 60
+    milliseconds = round((seconds-math.floor(seconds))*1000)
+    seconds = math.floor(seconds)
+    formatted_time = f"{hours:02d}:{minutes:02d}:{seconds:02d}:{milliseconds:03d}"
+    return formatted_time
+
+def generate_subtitles(segments):
+    substite_file = []
+    text =""
+    for segment in segments:
+        segment_start = format_time(segment.start)
+        segment_end = format_time(segment.end)
+        text +=f"{segment_start} --> {segment_end} : "
+        text +=f"{segment.text}"
+        substite_file.append(text)
+        text = ""
+
+    return substite_file
+
+
+
 def run(video_name):
+   
     extracted_audio = extract_audio(video_name)
     language, segments = transcribe_audio(audio=extracted_audio)
+    subtitles = generate_subtitles(segments)
+    logging.info(f"Subtitles: {subtitles}")
     logging.info(f"Language detected: {language}")
 
-
-
-
+    metadata = ffmpeg.probe("data/" + video_name)
+    logging.info(f"Metadata: {metadata}")
+    metadata["subtitles"] = subtitles
+    metadata["language"] = language
+    json_metadata_file_path = f"data/Metadata_{video_name.replace('.mp4', '.json')}"
+    with open(json_metadata_file_path, 'w') as json_file:
+        json.dump(metadata, json_file)
+    logging.info(f"Metadata file: {json_metadata_file_path}")
+    return json_metadata_file_path.split("/")[-1]
 
 def main():
 
@@ -64,25 +95,25 @@ def main():
     connection = connect_to_rabbitmq()
     channel = connection.channel()
 
+    video_name = ""
+    # create a queue to receive the video name from the downscale app
     channel.queue_declare(queue='donwscale_process')  
+    channel.queue_declare(queue='detect_animals_process')
     logging.info('Waiting for messages. To exit press CTRL+C')
 
     def callback(ch, method, properties, body):
         logging.info("########################################################")
         logging.info(f" Received   {body} ")
-        run(body.decode('utf-8'))
+        metadataFile = run(body.decode('utf-8'))
+        video_name = body.decode('utf-8')
+        channel.basic_publish(exchange='', routing_key='detect_animals_process', body=video_name)
+        channel.basic_publish(exchange='', routing_key='detect_animals_process', body=metadataFile)
+
         logging.info("########################################################")
-
-        # # receive the video name from the queue
-    
-    
     channel.basic_consume(queue='donwscale_process', on_message_callback=callback, auto_ack=True)
-    
     channel.start_consuming()
-
-
-
-
+    
+    # connection.close()
 
 
 if __name__ == "__main__":
