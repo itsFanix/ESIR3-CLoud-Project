@@ -13,4 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY  . /usr/src/languagepod
 
+EXPOSE 35000
+
 CMD [ "python", "main.py" ]

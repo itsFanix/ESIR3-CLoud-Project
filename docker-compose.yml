@@ -1,2 +1,63 @@
-
 version: '3'
+
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    hostname: "rabbitmq"
+    container_name: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - pipelinenetwork
+    volumes:
+      - rabbitmqVolume:/var/lib/rabbitmq/
+    
+    healthcheck:
+      test: ["CMD","curl","-f", "rabbitmq:15672"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  downscalepod:
+    build: 
+      context: ./downscaleApp
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - pipelineVolume:/downscale-app/static/processVideo
+    depends_on:
+      - rabbitmq
+    restart: always
+    networks:
+      - pipelinenetwork
+    
+
+  languagepod:
+    build: 
+      context: ./languageDetectionApp
+      dockerfile: Dockerfile
+    ports:
+      - "35000:35000"
+    volumes:
+      - pipelineVolume:/usr/src/languagepod/data/
+
+    depends_on:
+      - rabbitmq
+    restart: always
+    networks:
+      - pipelinenetwork
+    
+volumes:
+  rabbitmqVolume:
+  pipelineVolume:
+
+networks:
+  pipelinenetwork:
+    driver: bridge
+

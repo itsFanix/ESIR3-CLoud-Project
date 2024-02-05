@@ -2,6 +2,7 @@ from videoProcessing import downScale
 from flask import Flask, render_template, request, redirect, url_for
 
 import os
+import pika
 # from videoProcessing import downScale
 
 app = Flask(__name__)
@@ -12,6 +13,12 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    #RabbitMQ connection
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    channel = connection.channel()
+    channel.queue_declare(queue='donwscale_process')
+
+    # Request handling
     if request.method =='POST':
         #Vérification de la présence d'un fichier
         if 'video' not in request.files:
@@ -28,7 +35,16 @@ def upload():
         #Suppression du fichier téléchargé
         os.remove(file_path)
 
+        #Send the processed video name to the queue
+        video_filename = processed_video_path.split('/')[-1]
+        print("TEST MY VIDEO NAME")
+        print(processed_video_path)
+        print(video_filename)
         return render_template('result.html', video_path=processed_video_path)
+    
+    channel.basic_publish(exchange='', routing_key='donwscale_process', body="hello world")
+    connection.close()
+
 
 if __name__== '__main__':
     app.run(debug=True)
