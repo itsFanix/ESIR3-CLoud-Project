@@ -40,10 +40,11 @@ def upload():
         print("TEST MY VIDEO NAME")
         print(processed_video_path)
         print(video_filename)
+        channel.basic_publish(exchange='', routing_key='donwscale_process', body=video_filename)
+        connection.close()
         return render_template('result.html', video_path=processed_video_path)
     
-    channel.basic_publish(exchange='', routing_key='donwscale_process', body="hello world")
-    connection.close()
+   
 
 
 if __name__== '__main__':
