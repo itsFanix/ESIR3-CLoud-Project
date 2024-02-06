@@ -12,13 +12,6 @@ services:
       - pipelinenetwork
     volumes:
       - rabbitmqVolume:/var/lib/rabbitmq/
-    
-    healthcheck:
-      test: ["CMD","curl","-f", "rabbitmq:15672"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest

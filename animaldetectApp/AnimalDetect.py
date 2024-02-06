@@ -1,5 +1,17 @@
 import cv2
 import numpy as np
+from retry import retry
+import pika
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+
+@retry(delay=5, backoff=2, max_delay=60,logger=None)
+def connect_to_rabbitmq():
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    return connection
+
 
 def load_yolo():
     net = cv2.dnn.readNet("yolo_files/yolov3.weights", "yolo_files/yolov3.cfg")
@@ -68,11 +80,29 @@ def image_detection(video_path, net, classes, output_layers, colors):
     cap.release()
     cv2.destroyAllWindows()
 
-def main():
+def run(video_name):
+    video_path = f"data/{video_name}"
     net, classes, output_layers = load_yolo()
     colors = np.random.uniform(0, 255, size=(len(classes), 3))
-    video_path = "video.mp4"
     image_detection(video_path, net, classes, output_layers, colors)
+    logging.info(f"Processed {video_name}")
+
+def main():
+    logging.info("###############################")
+    connection = connect_to_rabbitmq()
+    channel = connection.channel()
+    channel.queue_declare(queue='metadataFileQueue')
+    logging.info('Waiting for messages. To exit press CTRL+C')
+
+    def callback(ch, method, properties, body):
+        logging.info("########################################################")
+        logging.info(f" Received   {body} ")
+        run(body.decode('utf-8'))
+        logging.info(f"Processed {body.decode('utf-8')}")
+    
+    channel.basic_consume(queue='metadataFileQueue', on_message_callback=callback, auto_ack=True)
+    channel.start_consuming()
+
 
 if __name__ == '__main__':
     main()

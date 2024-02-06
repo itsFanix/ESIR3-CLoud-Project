@@ -14,8 +14,7 @@ import json
 
 logging.basicConfig(level=logging.INFO)
 
-#Metadata file formant
-metadata ={}
+
 #RabbitMQ connection
 @retry(delay=5, backoff=2, max_delay=60,logger=None)
 def connect_to_rabbitmq():
@@ -102,8 +101,8 @@ def main():
     connection = connect_to_rabbitmq()
     channel = connection.channel()
     # create a queue to receive the video name from the downscale app
-    channel.queue_declare(queue='donwscale_process')  
-    channel.queue_declare(queue='detect_animals_process')
+    channel.queue_declare(queue='videoNameQueue')  
+    channel.queue_declare(queue='metadataFileQueue')
     logging.info('Waiting for messages. To exit press CTRL+C')
 
     def callback(ch, method, properties, body):
@@ -111,8 +110,8 @@ def main():
         logging.info(f" Received   {body} ")
         metadataFile = run(body.decode('utf-8'))
         video_name = body.decode('utf-8')
-        channel.basic_publish(exchange='', routing_key='detect_animals_process', body=video_name)
-        channel.basic_publish(exchange='', routing_key='detect_animals_process', body=metadataFile)
+        channel.basic_publish(exchange='', routing_key='videoNameQueue', body=video_name)
+        channel.basic_publish(exchange='', routing_key='metadataFileQueue', body=metadataFile)
 
         logging.info("########################################################")
     channel.basic_consume(queue='donwscale_process', on_message_callback=callback, auto_ack=True)

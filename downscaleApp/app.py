@@ -16,7 +16,7 @@ def upload():
     #RabbitMQ connection
     connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
     channel = connection.channel()
-    channel.queue_declare(queue='donwscale_process')
+    channel.queue_declare(queue='videoNameQueue')
 
     # Request handling
     if request.method =='POST':
@@ -40,7 +40,7 @@ def upload():
         print("TEST MY VIDEO NAME")
         print(processed_video_path)
         print(video_filename)
-        channel.basic_publish(exchange='', routing_key='donwscale_process', body=video_filename)
+        channel.basic_publish(exchange='', routing_key='videoNameQueue', body=video_filename)
         connection.close()
         return render_template('result.html', video_path=processed_video_path)
     
