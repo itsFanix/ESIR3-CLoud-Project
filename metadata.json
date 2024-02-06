@@ -1,0 +1,11 @@
+{
+    "videoUrl": "nom de la video",
+    "language" : "french",
+    "substile" : ["start -> end : Bonjour ", "start -> end : salut "],
+    "duraton" : "2h30min",
+    "codec" : "h264",
+    "encoder" : "Lavf58.29.100",
+    "animals" : ["cat", "dog", "bird"],
+    "size" : "1.5Go",
+    "bit_rate" : "1.5Mb/s"
+}
