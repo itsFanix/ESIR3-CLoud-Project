@@ -1,6 +1,17 @@
 import torch
 import cv2
+from retry import retry
+import pika
+import logging
 
+
+logging.basicConfig(level=logging.INFO)
+
+
+@retry(delay=5, backoff=2, max_delay=60,logger=None)
+def connect_to_rabbitmq():
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    return connection
 
 
 def detect_animals(video_path):
@@ -24,10 +35,10 @@ def detect_animals(video_path):
             if label in animalsClasse:
                 objet = {"label": label, "confidence": confidence.round(2)}
                 animalsInVideo.append(objet)
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 255, 0), 2)
-            cv2.putText(frame, text, (x1, y1 - 10), cv2.FONT_HERSHEY_TRIPLEX, 0.9, (36, 255, 12), 2)
-        cv2.imshow('frame', frame)
-        cv2.waitKey(10)
+        #     cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 255, 0), 2)
+        #     cv2.putText(frame, text, (x1, y1 - 10), cv2.FONT_HERSHEY_TRIPLEX, 0.9, (36, 255, 12), 2)
+        # cv2.imshow('frame', frame)
+        # cv2.waitKey(10)
     cap.release()
     cv2.destroyAllWindows()
     for animal in animalsInVideo:
@@ -42,8 +53,23 @@ def detect_animals(video_path):
 
 
 def main():
-    video_path = 'cow.mp4'
-    print(detect_animals(video_path))
+    connection = connect_to_rabbitmq()
+    channel = connection.channel()
+    channel.queue_declare(queue='metadataFileQueue')
+    logging.info('Waiting for messages. To exit press CTRL+C')
+
+    def callback(ch, method, properties, body):
+        logging.info("########################################################")
+        logging.info(f" Received   {body} ")
+        metadatafile = body.decode('utf-8')
+        logging.info(f"Processing {metadatafile}")
+        # logging.info(f"Processed {body.decode('utf-8')}")
+    
+    channel.basic_consume(queue='metadataFileQueue', on_message_callback=callback, auto_ack=True)
+    channel.start_consuming()
+
+    # video_path = 'data/cat.mp4'
+    # print(detect_animals(video_path))
 
 
 if __name__ == "__main__":

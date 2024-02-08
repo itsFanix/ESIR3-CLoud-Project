@@ -46,6 +46,20 @@ services:
     networks:
       - pipelinenetwork
     
+  animaldetectpod:
+    build: 
+        context: ./animaldetectApp
+        dockerfile: Dockerfile
+    ports:
+        - "4000:4000"
+    depends_on:
+        - rabbitmq
+    restart: always
+    volumes:
+        - pipelineVolume:/usr/src/animaldetectpod/data/
+    networks:
+        - pipelinenetwork
+    
 volumes:
   rabbitmqVolume:
   pipelineVolume:
