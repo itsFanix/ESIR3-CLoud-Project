@@ -35,9 +35,8 @@ def transcribe_audio(audio):
     model = WhisperModel("base")
     segments, info = model.transcribe(audio)
     language = info[0]
-    language = Lang(language).name
-    segments = list(segments)
- 
+    language =  Lang(language).name  if language != "nn" else "No language detected"
+    segments = list(segments) if segments else list()
     os.remove(audio)
     return language,segments
 
@@ -52,16 +51,19 @@ def format_time(seconds):
     return formatted_time
 
 def generate_subtitles(segments):
-    substite_file = []
+    substites = []
     text =""
-    for segment in segments:
-        segment_start = format_time(segment.start)
-        segment_end = format_time(segment.end)
-        text +=f"{segment_start} --> {segment_end} : "
-        text +=f"{segment.text}"
-        substite_file.append(text)
-        text = ""
-    return substite_file
+    if not segments:
+        return ["No subtitles available"]
+    else:
+        for segment in segments:
+            segment_start = format_time(segment.start)
+            segment_end = format_time(segment.end)
+            text +=f"{segment_start} --> {segment_end} : "
+            text +=f"{segment.text}"
+            substites.append(text)
+            text = ""
+    return substites
 
 def generate_metadata(video_name, subtitles, language):
     metadataDico = ffmpeg.probe("data/" + video_name)
@@ -110,15 +112,16 @@ def main():
         logging.info(f" Received   {body} ")
         metadataFile = run(body.decode('utf-8'))
         video_name = body.decode('utf-8')
-        channel.basic_publish(exchange='', routing_key='videoNameQueue', body=video_name)
+        # channel.basic_publish(exchange='', routing_key='metadataFileQueue', body=video_name)
         channel.basic_publish(exchange='', routing_key='metadataFileQueue', body=metadataFile)
 
         logging.info("########################################################")
-    channel.basic_consume(queue='donwscale_process', on_message_callback=callback, auto_ack=True)
+    channel.basic_consume(queue='videoNameQueue', on_message_callback=callback, auto_ack=True)
     channel.start_consuming()
+
     
 if __name__ == "__main__":
-    
+
     main()
 
 

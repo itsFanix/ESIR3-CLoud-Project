@@ -14,9 +14,9 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     #RabbitMQ connection
-    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
-    channel = connection.channel()
-    channel.queue_declare(queue='videoNameQueue')
+    # connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    # channel = connection.channel()
+    # channel.queue_declare(queue='videoNameQueue')
 
     # Request handling
     if request.method =='POST':
@@ -40,8 +40,9 @@ def upload():
         print("TEST MY VIDEO NAME")
         print(processed_video_path)
         print(video_filename)
-        channel.basic_publish(exchange='', routing_key='videoNameQueue', body=video_filename)
-        connection.close()
+        #Pour docker
+        # channel.basic_publish(exchange='', routing_key='videoNameQueue', body=video_filename)
+        # connection.close()
         return render_template('result.html', video_path=processed_video_path)
     
 if __name__== '__main__':
