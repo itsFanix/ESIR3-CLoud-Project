@@ -3,6 +3,9 @@ import cv2
 from retry import retry
 import pika
 import logging
+import json
+
+from sendDataToAws import mainSend
 
 
 logging.basicConfig(level=logging.INFO)
@@ -52,6 +55,25 @@ def detect_animals(video_path):
     return realAnimals
 
 
+def run(metadataFileName):
+    metadata = "data/" + metadataFileName
+    
+    json_data = {}
+    with open(metadata, "r") as file:
+        json_data = json.load(file)
+    
+    animals = detect_animals("data/"+ json_data["fileName"])
+
+    video_key = "ID" + json_data["fileName"] 
+    video_path = "data/" + json_data["fileName"]
+
+    json_data["animals"] = animals
+    logging.info(f"metadas: {json_data}")
+
+    # send data to aws
+    mainSend(video_path, video_key, json_data)
+    return json_data
+
 def main():
     connection = connect_to_rabbitmq()
     channel = connection.channel()
@@ -63,6 +85,7 @@ def main():
         logging.info(f" Received   {body} ")
         metadatafile = body.decode('utf-8')
         logging.info(f"Processing {metadatafile}")
+        run(metadatafile)
         # logging.info(f"Processed {body.decode('utf-8')}")
     
     channel.basic_consume(queue='metadataFileQueue', on_message_callback=callback, auto_ack=True)

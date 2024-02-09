@@ -56,19 +56,20 @@ def generate_subtitles(segments):
     if not segments:
         return ["No subtitles available"]
     else:
-        for segment in segments:
+        for index, segment in enumerate(segments):
             segment_start = format_time(segment.start)
             segment_end = format_time(segment.end)
             text +=f"{segment_start} --> {segment_end} : "
             text +=f"{segment.text}"
-            substites.append(text)
+            subobject = {index : text}
+            substites.append(subobject)
             text = ""
     return substites
 
 def generate_metadata(video_name, subtitles, language):
     metadataDico = ffmpeg.probe("data/" + video_name)
     metadata = {
-        "video_path": "data/" + video_name,
+        "fileName":  video_name,
         "duration": metadataDico["format"]["duration"],
         "bit_rate": metadataDico["format"]["bit_rate"],
         "size": metadataDico["format"]["size"],

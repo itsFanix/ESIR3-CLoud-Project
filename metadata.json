@@ -1,4 +1,5 @@
 {
+    "fileName": "nom du fichier",
     "videoUrl": "nom de la video",
     "language" : "french",
     "substile" : ["start -> end : Bonjour ", "start -> end : salut "],
@@ -9,3 +10,4 @@
     "size" : "1.5Go",
     "bit_rate" : "1.5Mb/s"
 }
+

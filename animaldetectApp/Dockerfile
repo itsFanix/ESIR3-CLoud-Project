@@ -8,7 +8,7 @@ RUN apt-get install -y ffmpeg libsm6 libxext6
 
 COPY requirements.txt requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY  . /usr/src/animaldetectpod
 

@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 
 import os
 import pika
-# from videoProcessing import downScale
+
 
 app = Flask(__name__)
 
@@ -14,9 +14,9 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     #RabbitMQ connection
-    # connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
-    # channel = connection.channel()
-    # channel.queue_declare(queue='videoNameQueue')
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    channel = connection.channel()
+    channel.queue_declare(queue='videoNameQueue')
 
     # Request handling
     if request.method =='POST':
@@ -41,8 +41,8 @@ def upload():
         print(processed_video_path)
         print(video_filename)
         #Pour docker
-        # channel.basic_publish(exchange='', routing_key='videoNameQueue', body=video_filename)
-        # connection.close()
+        channel.basic_publish(exchange='', routing_key='videoNameQueue', body=video_filename)
+        connection.close()
         return render_template('result.html', video_path=processed_video_path)
     
 if __name__== '__main__':
