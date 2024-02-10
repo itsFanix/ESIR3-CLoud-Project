@@ -4,6 +4,7 @@ from retry import retry
 import pika
 import logging
 import json
+from decimal import Decimal
 
 from sendDataToAws import mainSend
 
@@ -30,13 +31,13 @@ def detect_animals(video_path):
         result = model(frame)
         df = result.pandas().xyxy[0]
         for ind in df.index:
-            x1, y1 = int(df['xmin'][ind]), int(df['ymin'][ind])
-            x2, y2 = int(df['xmax'][ind]), int(df['ymax'][ind])
+            # x1, y1 = int(df['xmin'][ind]), int(df['ymin'][ind])
+            # x2, y2 = int(df['xmax'][ind]), int(df['ymax'][ind])
             label = df['name'][ind]
             confidence = df['confidence'][ind]
-            text = f'{label} {confidence:.2f}'
+            # text = f'{label} {confidence:.2d}'
             if label in animalsClasse:
-                objet = {"label": label, "confidence": confidence.round(2)}
+                objet = {"label": label, "confidence":str(confidence.round(2))}
                 animalsInVideo.append(objet)
         #     cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 255, 0), 2)
         #     cv2.putText(frame, text, (x1, y1 - 10), cv2.FONT_HERSHEY_TRIPLEX, 0.9, (36, 255, 12), 2)
@@ -68,11 +69,9 @@ def run(metadataFileName):
     video_path = "data/" + json_data["fileName"]
 
     json_data["animals"] = animals
-    logging.info(f"metadas: {json_data}")
-
     # send data to aws
     mainSend(video_path, video_key, json_data)
-    return json_data
+    logging.info(f"Processed {metadataFileName}")
 
 def main():
     connection = connect_to_rabbitmq()
@@ -87,6 +86,7 @@ def main():
         logging.info(f"Processing {metadatafile}")
         run(metadatafile)
         # logging.info(f"Processed {body.decode('utf-8')}")
+        logging.info("######################PIPELINE TRAITEMENT  OVER##################################")
     
     channel.basic_consume(queue='metadataFileQueue', on_message_callback=callback, auto_ack=True)
     channel.start_consuming()

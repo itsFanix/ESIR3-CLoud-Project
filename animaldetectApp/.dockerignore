@@ -1,6 +1,6 @@
 env/
 yolo_files/
 AnimalDetection.py
-sendDataToAws.py
+
 
 

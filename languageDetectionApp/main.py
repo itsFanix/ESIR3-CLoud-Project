@@ -5,7 +5,6 @@ from faster_whisper import WhisperModel
 from iso639 import Lang
 import os
 import pika
-
 from retry import retry
 import logging
 import json
@@ -124,7 +123,3 @@ def main():
 if __name__ == "__main__":
 
     main()
-
-
-
-

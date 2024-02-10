@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video Processing APP</title>
-</head>
-<body>
-    <h1>Video Processing APP</h1>
-    <p>Upload a video to process it</p>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="video" id="video">
-        <input type="submit" value="Upload Video" name="submit">
-    </form>
-    
-</body>
+  </head>
+  <body>
+    <h1>Pipeline de traitement video</h1>
+    <main>
+      <div class="uploadContainer">
+        <p>Upload a video to process it</p>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          <input type="file" name="video" id="video" />
+          <input type="submit" value="Upload Video" name="submit" />
+        </form>
+      </div>
+        <div class="processContainer">
+            <p>Process a video</p>
+            <form action="/process" method="POST">
+            <input type="text" name="video" id="video" />
+            <input type="submit" value="Process Video" name="submit" />
+            </form>
+    </main>
+  </body>
 </html>
