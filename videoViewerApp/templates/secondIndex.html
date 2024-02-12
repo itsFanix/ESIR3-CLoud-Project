@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Video Viewer App</title>
+</head>
+<body>
+    <header>
+
+    </header>
+    <main>
+            <div id="video-container">
+                <iframe id="video" width="560" height="315" src="https://www.youtube.com/watch?v=PGZHSwm1-s0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div id="video-description">
+                <h2>Video Metadata</h2>
+                <p>Video Description</p>
+                <p>Language</p>
+                <p>Views</p>
+                <p>Published Date</p>
+                <p>Animals in the video</p>
+                <p>Encoder</p>
+                <p>codec</p>
+                <p>nb_stream</p>
+            </div>
+            <div id="video-list">
+                <ul>
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=PGZHSwm1-s0">Video 1</a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=PGZHSwm1-s0">Video 2</a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=PGZHSwm1-s0">Video 3</a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=PGZHSwm1-s0">Video 4</a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=PGZHSwm1-s0">Video 5</a>
+                    </li>
+                </ul>
+            </div>
+
+    
+</body>
+</html>

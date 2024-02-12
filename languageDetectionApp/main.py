@@ -34,8 +34,8 @@ def transcribe_audio(audio):
     model = WhisperModel("base")
     segments, info = model.transcribe(audio)
     language = info[0]
-    language =  Lang(language).name  if language != "nn" else "No language detected"
-    segments = list(segments) if segments else list()
+    language =  Lang(language).name  
+    segments = list(segments) 
     os.remove(audio)
     return language,segments
 
@@ -65,36 +65,46 @@ def generate_subtitles(segments):
             text = ""
     return substites
 
-def generate_metadata(video_name, subtitles, language):
+# def generate_metadata(video_name, subtitles, language):
+#     metadataDico = ffmpeg.probe("data/" + video_name)
+#     metadata = {
+#         "fileName":  video_name,
+
+#         "duration": metadataDico["format"]["duration"],
+#         "subtitles": subtitles,
+#         "language": language
+#     }
+
+#     logging.info(f"Metadata: {metadata}")
+#     json_metadata_file_path = f"data/Metadata_{video_name.replace('.mp4', '.json')}"
+#     with open(json_metadata_file_path, 'w') as json_file:
+#         json.dump(metadata, json_file)
+#     logging.info(f"Metadata file: {json_metadata_file_path}")
+#     return json_metadata_file_path.split("/")[-1]
+
+
+def run(metadatafile):
+
+    metadataFile_path= "data/" + metadatafile
+    
+    metadatafile ={}
+    with open(metadataFile_path, "r") as file:
+        metadatafile = json.load(file)
+    
+    video_name = metadatafile["fileName"]
     metadataDico = ffmpeg.probe("data/" + video_name)
-    metadata = {
-        "fileName":  video_name,
-        "duration": metadataDico["format"]["duration"],
-        "bit_rate": metadataDico["format"]["bit_rate"],
-        "size": metadataDico["format"]["size"],
-        "nb_streams": metadataDico["format"]["nb_streams"],
-        "first_stream_codec_name": metadataDico["streams"][0]["codec_name"],
-        "second_stream_codec_name": metadataDico["streams"][1]["codec_name"],  # ???? 
-        "subtitles": subtitles,
-        "language": language
-    }
 
-    logging.info(f"Metadata: {metadata}")
-    json_metadata_file_path = f"data/Metadata_{video_name.replace('.mp4', '.json')}"
-    with open(json_metadata_file_path, 'w') as json_file:
-        json.dump(metadata, json_file)
-    logging.info(f"Metadata file: {json_metadata_file_path}")
-    return json_metadata_file_path.split("/")[-1]
-
-
-def run(video_name):
     extracted_audio = extract_audio(video_name)
     language, segments = transcribe_audio(audio=extracted_audio)
     subtitles = generate_subtitles(segments)
-    logging.info(f"Subtitles: {subtitles}")
-    logging.info(f"Language detected: {language}")
-    metadatafile = generate_metadata(video_name, subtitles, language)
-    return metadatafile
+    metadatafile["subtitles"] = subtitles
+    metadatafile["language"] = language
+    metadatafile["duration"]= metadataDico["format"]["duration"]
+
+    with open(metadataFile_path, 'w') as json_file:
+        json.dump(metadatafile, json_file)
+    logging.info(f"Metadata: {metadatafile}")
+    return metadataFile_path.split("/")[-1]
     
 
 def main():
@@ -106,6 +116,8 @@ def main():
     channel.queue_declare(queue='videoNameQueue')  
     channel.queue_declare(queue='metadataFileQueue')
     logging.info('Waiting for messages. To exit press CTRL+C')
+
+    
 
     def callback(ch, method, properties, body):
         logging.info("########################################################")

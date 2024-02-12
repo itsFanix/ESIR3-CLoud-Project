@@ -2,7 +2,7 @@ version: '3'
 
 services:
   rabbitmq:
-    image: "rabbitmq:3-management-alpine"
+    image: "rabbitmq:3-management"
     hostname: "rabbitmq"
     container_name: "rabbitmq"
     ports:
@@ -12,6 +12,7 @@ services:
       - pipelinenetwork
     volumes:
       - rabbitmqVolume:/var/lib/rabbitmq/
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
@@ -23,7 +24,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - pipelineVolume:/downscale-app/static/processVideo
+      - pipelineVolume:/downscale-app/static/data
     depends_on:
       - rabbitmq
     restart: always

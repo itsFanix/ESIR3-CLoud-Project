@@ -3,24 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>Video Processing APP</title>
   </head>
   <body>
-    <h1>Pipeline de traitement video</h1>
+    
     <main>
-      <div class="uploadContainer">
-        <p>Upload a video to process it</p>
+
+      <div class="leftContainer">
+        
         <form action="/upload" method="POST" enctype="multipart/form-data">
-          <input type="file" name="video" id="video" />
+
+          <label for="videoDescription" >
+            Video Description
+            <input  type="text" name ='videoDescription' id='videoDescription' placeholder='Description ' /> 
+          </label>
+          
+
+          <label for="video" >
+            Video File
+            <input type="file" name="video" class="fileInput" />
+            
+          </label>
+          
+          <label for="thumbnail">
+            Thumbnail
+            <input type="file" name="thumbnail" class="fileInput" />
+          </label>
+          
           <input type="submit" value="Upload Video" name="submit" />
-        </form>
+      </form>
+      </div> 
+      <div class="rightContainer">
+        <h1>Video processing pipeline</h1>
       </div>
-        <div class="processContainer">
-            <p>Process a video</p>
-            <form action="/process" method="POST">
-            <input type="text" name="video" id="video" />
-            <input type="submit" value="Process Video" name="submit" />
-            </form>
+      </div>
     </main>
   </body>
 </html>

@@ -4,13 +4,20 @@
     box-sizing: border-box;
 }   
 
+
+  
+
 body{
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background-color: #1b1b32;
+    color: #f5f6f7;
+    font-family: Tahoma;
+    font-size: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 h1{
@@ -18,29 +25,102 @@ h1{
     margin-bottom: 20px;
 }
 main{
-    width: 90%;
+    width: 70%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: row;
-    border-radius: 10px;
-}
-.container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-}
-video{
-    width: 80%;
+    border: 2px solid #000;
+    border-radius: 20px;
+     background-image:linear-gradient(135deg, rgba(33,33,80,0.5) 0%, rgba(106,112,143,0.6) 30%, rgba(140,101,109,0.6) 100%), url("https://i.pinimg.com/564x/1a/84/00/1a8400e0c0cf0a9adeb03d58e40ce0b0.jpg");
+    background-size: cover; /* Ensures the image covers the entire element */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+  /* Adjust width as needed */
     height: 80%;
+  
 }
-.uploadVideo{
+label {
+    display: block;
+    margin:.5rem 0;
+    width: 100%;
+  }
+  
+
+.leftContainer, .rightContainer{
+    height: 100%;
+    border-radius: 20px;
+    
+}
+.leftContainer{
     width: 50%;
-    height: 50%;
+    background-color: rgba(248, 246, 246, 0.185);
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
+    
 
 }
+.rightContainer{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    
+    
+}
+
+
+h1, p {
+    margin: 1em auto;
+    text-align: center;
+  }
+  input{
+    width:100%;
+    margin:12px 0 0 0;
+    min-height:3em;
+    border-radius:5px;
+    border:none;
+  }
+
+  
+  
+input[type="text"], input[type="file"]{
+  background-color: #0a0a23;
+  border: 1px solid #0a0a23;
+  color: #ffffff;
+  width:100%;
+  margin:12px 0 0 0;
+  min-height:4em;
+  border-radius:5px;
+  border:none;
+}
+
+input[type="file"] {
+  position: relative;
+  outline: none;
+  padding: 4px;
+  margin: -4px;
+}
+form {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    /* max-width: 1200px;
+    min-width: 300px; */
+    margin: 0 auto;
+    padding-bottom: 2em;
+  }
+  
+
+input[type="submit"] {
+    display: block;
+    width: 60%;
+    margin: 1em auto;
+    height: 2em;
+    font-size: 1.1rem;
+    background-color: #3b3b4f;
+    border-color: white;
+    min-width: 300px;
+  }
+
+  

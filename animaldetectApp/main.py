@@ -65,12 +65,9 @@ def run(metadataFileName):
     
     animals = detect_animals("data/"+ json_data["fileName"])
 
-    video_key = "ID" + json_data["fileName"] 
-    video_path = "data/" + json_data["fileName"]
-
     json_data["animals"] = animals
     # send data to aws
-    mainSend(video_path, video_key, json_data)
+    mainSend(json_data)
     logging.info(f"Processed {metadataFileName}")
 
 def main():

@@ -27,9 +27,9 @@ def uploadMetadata(metadatafile):
     table.put_item(Item=metadatafile)
 
 
-def linkMetadataToVideo(video_key, metadatafile):
-    metadatafile["video_key"] = video_key
-    uploadMetadata(metadatafile)
+# def linkMetadataToVideo(video_key, metadatafile):
+#     metadatafile["video_key"] = video_key
+#     uploadMetadata(metadatafile)
 
 
 
@@ -39,20 +39,23 @@ def linkMetadataToVideo(video_key, metadatafile):
     
 #intialize the dynamodb resource
 
-def mainSend(arg1, arg2, arg3):
-    print(aws_access_key_id)
-    print(aws_secret_access_key)
-    video_path = arg1
-    video_key =    arg2
-    metadatafile = arg3
+def mainSend(metadatafile):
+    logging.info(f"Sending data to AWS {metadatafile}")
+    
+    video_path = "data/" + metadatafile["fileName"]
+    thumbnail_path = "data/" + metadatafile["thumbnail"]
+    video_key = metadatafile["fileName"]
+    thumbnail_key =  metadatafile["thumbnail"]
+    
+    
 
-    # json_path= arg3
-    # with open(json_path) as f:
-    #     metadatafile = json.load(f)
+  
         
     uploadVideo(video_path,video_key)
-    # print(metadatafile)
-    linkMetadataToVideo(video_key, metadatafile)
+    uploadVideo(thumbnail_path,thumbnail_key)
+    uploadMetadata(metadatafile)
+   
+    
     return 'Upload successful'
 
 # if __name__ == "__main__":

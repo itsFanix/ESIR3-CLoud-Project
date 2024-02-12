@@ -1,3 +1,4 @@
 videos/
 .env
 appFront/
+config.py

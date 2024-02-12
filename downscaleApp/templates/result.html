@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,7 +13,7 @@
             <h1>Video successfully downscaled</h1> 
 
             <div class="uploadVideo">
-                <video controls>
+                <video controls width="400px" height="400px">
                     <source src="{{video_path}}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -22,4 +22,32 @@
 
 </body>
 
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Video Processing APP</title>
+  </head>
+  <body>
+    
+    <main>
+
+      <div class="leftContainer">
+
+        <h1>Downscale</h1>
+        <h1>language dection and substiles</h1>
+        <h1>animal Identification</h1>
+        
+        
+      </div> 
+      <div class="rightContainer">
+        <h1>Video processing pipeline</h1>
+      </div>
+      </div>
+    </main>
+  </body>
 </html>
