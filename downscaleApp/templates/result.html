@@ -33,8 +33,22 @@
     <title>Video Processing APP</title>
   </head>
   <body>
+
+    <div class="uploadVideo">
+      <h1>Video successfully downscaled</h1> 
+
+      <div class="uploadVideo">
+          <video controls width="400px" height="400px">
+              <source src="{{video_path}}" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+      </div>
+  </div>
+    
     
     <main>
+
+
 
       <div class="leftContainer">
 
@@ -49,5 +63,21 @@
       </div>
       </div>
     </main>
+
+    <script>
+      document.onreadystatechange = function () {
+          if (document.readyState !== "complete") {
+              document.querySelector(
+                  "body").style.visibility = "hidden";
+              document.querySelector(
+                  "#loader").style.visibility = "visible";
+          } else {
+              document.querySelector(
+                  "#loader").style.display = "none";
+              document.querySelector(
+                  "body").style.visibility = "visible";
+          }
+      };
+  </script>
   </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link type="text/js" href="{{url_for('static', filename='js/script.js')}}">
     <title>Video Processing APP</title>
   </head>
   <body>
@@ -11,15 +12,12 @@
     <main>
 
       <div class="leftContainer">
-        
-        <form action="/upload" method="POST" enctype="multipart/form-data">
+        <form id='uploadForm' action="/upload" method="POST" enctype="multipart/form-data">
 
           <label for="videoDescription" >
             Video Description
             <input  type="text" name ='videoDescription' id='videoDescription' placeholder='Description ' /> 
           </label>
-          
-
           <label for="video" >
             Video File
             <input type="file" name="video" class="fileInput" />
@@ -33,6 +31,8 @@
           
           <input type="submit" value="Upload Video" name="submit" />
       </form>
+
+      <div id="loadingSpinner" style="display:none;">Chargement en cours...</div>
       </div> 
       <div class="rightContainer">
         <h1>Video processing pipeline</h1>

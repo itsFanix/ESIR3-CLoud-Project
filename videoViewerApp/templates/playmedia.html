@@ -11,13 +11,19 @@
 <body>
         <div class="uploadVideo">
             <h1>Video successfully </h1> 
-
             <div class="uploadVideo">
-                <video controls>
+                <video controls width="400px" height="400px" >
                     <source src="{{video_path}}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
+        </div>
+        <div class="language">
+            <h2>Language Detected: {{language}}</h2>
+        </div>
+
+        <div class="animals">
+            <h2>Animals Detected: {{animals}}</h2>
         </div>
 
 </body>

@@ -60,8 +60,7 @@ def generate_subtitles(segments):
             segment_end = format_time(segment.end)
             text +=f"{segment_start} --> {segment_end} : "
             text +=f"{segment.text}"
-            subobject = {index : text}
-            substites.append(subobject)
+            substites.append(text)
             text = ""
     return substites
 
