@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+
 import  controller 
 
 
@@ -14,6 +15,8 @@ def index():
 def play():
     video_name = request.args.get('video_name')
     video_path, language, animals = controller.get_video(video_name)
-    return render_template('playmedia.html', video_path=video_path, language=language, animals=animals)
+
+   
+    return render_template('playmedia.html', video_path=video_path, language=language, animals= animals)
 if __name__== '__main__':
     app.run(debug=True)

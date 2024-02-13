@@ -4,28 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/playmediaStyle.css') }}">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <title>Video Processed</title>
 </head>
 
 <body>
-        <div class="uploadVideo">
-            <h1>Video successfully </h1> 
+    <header class="header">
+        <div class="logo left">
+            <i id="menu" class="material-icons">menu</i>
+
+        </div>
+        <div class="search center">
+            <form action="">
+                <input type="text" name="search" id="search" placeholder="Search">
+                <button type="submit" id="search-button">
+                    <i class="material-icons">search</i>
+                </button>
+            </form>
+            <i class="material-icons mic">mic</i>
+        </div>
+
+        <div class="icons right">
+            <i class="material-icons">videocam</i>
+            <i class="material-icons">apps</i>
+            <i class="material-icons">notifications</i>
+            <i class="material-icons display-this"></i>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+
             <div class="uploadVideo">
-                <video controls width="400px" height="400px" >
+                <video controls  autoplay>
                     <source src="{{video_path}}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
-        </div>
-        <div class="language">
-            <h2>Language Detected: {{language}}</h2>
-        </div>
 
-        <div class="animals">
-            <h2>Animals Detected: {{animals}}</h2>
-        </div>
+            <div class="language">
+                <h2>Language Detected: {{language}}</h2>
+            </div>
 
+          
+        </div>
+        <div class="side-bar">
+            <div class="animals">
+                <h2>Animals Detected </h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Animal Name</th>
+                            <th>Probality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for animal in animals %}
+                        <tr>
+                            <td>{{animal["label"]}}</td>
+                            <td>{{animal["confidence"]}}</td>
+                        </tr>
+                        {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+    </main>
 </body>
 
 </html>

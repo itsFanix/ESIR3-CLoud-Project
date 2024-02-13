@@ -5,40 +5,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+     <!-- Material Icons -->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <title>Video Viewer app</title>
 </head>
 
 <body>
-    <div class="videos">
 
-        <section class="video-section">
-            {% for v in video_list %}
+    <header class="header">
+        <div class="logo left">
+            <i id="menu" class="material-icons">menu</i>
 
-            <article class="video-container">
-                <a href="/playmedia?video_name={{v.fileName}}" class="thumbnail" data-duration="{{v.duration}}">
+        </div>
+        <div class="search center">
+            <form action ="">
+                <input type="text" name="search" id="search" placeholder="Search">
+                <button type="submit" id="search-button">
+                    <i class="material-icons">search</i>
+                </button>
+            </form>
+            <i class="material-icons mic">mic</i>
+        </div>
 
-                    <img class="thumbnail-image" src="{{v.thumbnail}}" alt="Video Thumbnail">
+        <div class="icons right">
+            <i class="material-icons">videocam</i>
+            <i class="material-icons">apps</i>
+            <i class="material-icons">notifications</i>
+            <i class="material-icons display-this"></i>
+        </div>
+    </header>
+    <main>
+
+        <div class="side-bar">
+            <div class="nav">
+                <a class="nav-link active">
+                    <i class="material-icons">home</i>
+                    <span>Home</span>
                 </a>
-                <div class="video-bottom-section">
-                    <a href="#">
-                        <img class="channel-icon" src="https://unsplash.it/36/36?gravity=center" alt="Channel Icon">
+
+                <a class="nav-link">
+                    <i class="material-icons">local_fire_department</i>
+                    <span>Trending</span>
+                </a>
+
+                <a class="nav-link">
+                    <i class="material-icons">subscriptions</i>
+                    <span>Subscriptions</span>
+                </a>
+            </div>
+            <hr>
+            <a class="nav-link ">
+                <i class="material-icons">library_add_check</i>
+                <span>Library</span>
+            </a>
+
+            <a class="nav-link">
+                <i class="material-icons">history</i>
+                <span>History</span>
+            </a>
+
+            <a class="nav-link">
+                <i class="material-icons">play_arrow</i>
+                <span>Your Videos</span>
+            </a>
+            <a class="nav-link">
+                <i class="material-icons">watch_later</i>
+                <span>Watch Later</span>
+            </a>
+
+            <a class="nav-link">
+                <i class="material-icons">thumb_up</i>
+                <span>Liked Video</span>
+            </a>
+        </div>
+
+
+        <div class="videos">
+
+            <section class="video-section">
+                {% for v in video_list %}
+
+                <article class="video-container">
+                    <a href="/playmedia?video_name={{v.fileName}}" class="thumbnail" data-duration="{{v.duration}}">
+
+                        <img class="thumbnail-image" src="{{v.thumbnail}}" alt="Video Thumbnail">
                     </a>
-                    <div class="video-details">
-                        <a href="#" class="video-title">{{v.videoDescription}}</a>
-                        <a href="#" class="video-channel-name"></a>
-                        <div class="video-metadata">
-                            <span class="video-views">12K Views</span>
-                            <span class="video-published-date">{{v.date}}</span>
+                    <div class="video-bottom-section">
+                        <a href="#">
+                            <img class="channel-icon" src="https://unsplash.it/36/36?gravity=center" alt="Channel Icon">
+                        </a>
+                        <div class="video-details">
+                            <a href="#" class="video-title">{{v.videoDescription}}</a>
+                            <a href="#" class="video-channel-name"></a>
+                            <div class="video-metadata">
+                                <span class="video-views">12K Views</span>
+                                <span class="video-published-date">{{v.date}}</span>
 
-                        </div>
+                            </div>
 
-            </article>
-            {% endfor %}
+                </article>
+                {% endfor %}
 
-            <!-- <article class="video-container">
+                <!-- <article class="video-container">
                 <a href="#" class="thumbnail" data-duration="12:24">
                     <img class="thumbnail-image" src="https://unsplash.it/250/150?gravity=center" alt="Video Thumbnail">
                 </a>
@@ -174,8 +248,8 @@
 
 
 
-        </section>
-        <!-- <section class="video-section">
+            </section>
+            <!-- <section class="video-section">
             <article class="video-container">
                 <a href="#" class="thumbnail" data-duration="12:24">
                     <img class="thumbnail-image" src="https://unsplash.it/250/150?gravity=center" alt="Video Thumbnail">
@@ -489,7 +563,8 @@
             
 
         </section> -->
-    </div>
+        </div>
+    </main>
 
 </body>
 
