@@ -24,9 +24,12 @@ Assurez-vous d'avoir Docker installé sur votre système. Vous aurez également 
 git clone <lien du git-référentiel>
 
 Accéder au répertoire du projet par:
+
 cd ESIR3-Cloud-Project
 
-## **Lancement des Conteneurs Docker**
+## **Lancement de projetr**
 
-Il faut utiliser docker Compose pour construire et lancer les conteneurs
+Il faut utiliser docker Compose pour lancer les conteneurs:
+
+docker-compose up
 
