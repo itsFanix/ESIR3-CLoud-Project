@@ -29,7 +29,7 @@ cd ESIR3-Cloud-Project
 
 ## **Lancement de projetr**
 
-Il faut utiliser docker Compose pour lancer les conteneurs:
+Il faut utiliser docker Compose pour lancer tous les conteneurs ensemble:
 
 docker-compose up
 
