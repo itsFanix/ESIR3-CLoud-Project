@@ -21,7 +21,7 @@ Ce répertoire se concentre sur la récupération et la manipulation des vidéos
 Assurez-vous d'avoir Docker installé sur votre système. Vous aurez également besoin des informations d'identification AWS pour accéder aux services cloud, ainsi que RabbitMQ pour la gestion des messages.
 
 ## **Clonage du Projet**
-git clone  
+` git clone https://github.com/itsFanix/ESIR3-CLoud-Project.git`
 
 Accéder au répertoire du projet par:
 
