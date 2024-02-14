@@ -16,3 +16,6 @@ Ce répertoire contient l'application responsable de la détection des animaux d
 
 ### ***videoViewerApp***
 Ce répertoire se concentre sur la récupération et la manipulation des vidéos ainsi que de leurs métadonnées telles que la durée, le langage, les sous-titres et les animaux détectés dans la vidéo à partir du stockage AWS . 
+
+## **Prérequis**
+Assurez-vous d'avoir Docker installé sur votre système. Vous aurez également besoin des informations d'identification AWS pour accéder aux services cloud, ainsi que RabbitMQ pour la gestion des messages.
