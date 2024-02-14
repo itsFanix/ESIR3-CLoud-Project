@@ -89,23 +89,23 @@
         <div class="videos">
 
             <section class="video-section">
-                {% for v in video_list %}
+                {% for cle, valeur in video_list.items() %}
 
                 <article class="video-container">
-                    <a href="/playmedia?video_name={{v.fileName}}" class="thumbnail" data-duration="{{v.duration}}">
+                    <a href="/playmedia?video_name={{cle}}" class="thumbnail" data-duration="{{valeur.duration}}">
 
-                        <img class="thumbnail-image" src="{{v.thumbnail}}" alt="Video Thumbnail">
+                        <img class="thumbnail-image" src="{{valeur.thumbnail}}" alt="Video Thumbnail">
                     </a>
                     <div class="video-bottom-section">
                         <a href="#">
                             <img class="channel-icon" src="https://unsplash.it/36/36?gravity=center" alt="Channel Icon">
                         </a>
                         <div class="video-details">
-                            <a href="#" class="video-title">{{v.videoDescription}}</a>
+                            <a href="#" class="video-title">{{valeur.videoDescription}}</a>
                             <a href="#" class="video-channel-name"></a>
                             <div class="video-metadata">
                                 <span class="video-views">12K Views</span>
-                                <span class="video-published-date">{{v.date}}</span>
+                                <span class="video-published-date">{{valeur.date}}</span>
 
                             </div>
 

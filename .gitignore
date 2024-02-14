@@ -2,3 +2,4 @@ videos/
 .env
 appFront/
 config.py
+keyEC2

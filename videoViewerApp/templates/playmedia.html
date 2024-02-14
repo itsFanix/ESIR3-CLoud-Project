@@ -46,8 +46,22 @@
             <div class="language">
                 <h2>Language Detected: {{language}}</h2>
             </div>
-
-          
+            <div class="substitle">
+                <h2>Substitles</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time-Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in sub %}
+                        <tr>
+                            <td>{{i}}</td>
+                        </tr>
+                        {% endfor %}
+                </table>
+            </div>
         </div>
         <div class="side-bar">
             <div class="animals">
@@ -75,3 +89,4 @@
 </body>
 
 </html>
+
