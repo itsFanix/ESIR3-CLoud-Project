@@ -21,7 +21,7 @@ Ce répertoire se concentre sur la récupération et la manipulation des vidéos
 Assurez-vous d'avoir Docker installé sur votre système. Vous aurez également besoin des informations d'identification AWS pour accéder aux services cloud, ainsi que RabbitMQ pour la gestion des messages.
 
 ## **Clonage du Projet**
-git clone <lien du git-référentiel>
+git clone  
 
 Accéder au répertoire du projet par:
 
@@ -29,7 +29,7 @@ cd ESIR3-Cloud-Project
 
 ## **Lancement de projetr**
 
-Il faut utiliser docker Compose pour lancer tous les conteneurs ensemble:
+Dans le répertoire du projet lancer:
 
 docker-compose up
 
