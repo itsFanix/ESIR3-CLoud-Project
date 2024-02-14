@@ -20,5 +20,5 @@ Ce répertoire se concentre sur la récupération et la manipulation des vidéos
 ## **Prérequis**
 Assurez-vous d'avoir Docker installé sur votre système. Vous aurez également besoin des informations d'identification AWS pour accéder aux services cloud, ainsi que RabbitMQ pour la gestion des messages.
 
-## ** Clonage du Projet**
+## **Clonage du Projet**
 git clone <lien du git-référentiel>
