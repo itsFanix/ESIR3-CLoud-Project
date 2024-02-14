@@ -22,3 +22,8 @@ Assurez-vous d'avoir Docker installé sur votre système. Vous aurez également 
 
 ## **Clonage du Projet**
 git clone <lien du git-référentiel>
+
+## **Lancement des Conteneurs Docker**
+
+Il faut utiliser docker Compose pour construire et lancer les conteneurs
+
