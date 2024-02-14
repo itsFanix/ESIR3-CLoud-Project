@@ -34,50 +34,16 @@
   </head>
   <body>
 
-    <div class="uploadVideo">
-      <h1>Video successfully downscaled</h1> 
-
-      <div class="uploadVideo">
-          <video controls width="400px" height="400px">
-              <source src="{{video_path}}" type="video/mp4">
-              Your browser does not support the video tag.
-          </video>
-      </div>
-  </div>
-    
-    
     <main>
-
-
-
       <div class="leftContainer">
-
-        <h1>Downscale</h1>
-        <h1>language dection and substiles</h1>
-        <h1>animal Identification</h1>
-        
-        
+        <h2>Downscale</h2>
+        <h2>language dectection and substiles</h2>
+        <h2>animal Identification</h2>
       </div> 
       <div class="rightContainer">
         <h1>Video processing pipeline</h1>
       </div>
       </div>
     </main>
-
-    <script>
-      document.onreadystatechange = function () {
-          if (document.readyState !== "complete") {
-              document.querySelector(
-                  "body").style.visibility = "hidden";
-              document.querySelector(
-                  "#loader").style.visibility = "visible";
-          } else {
-              document.querySelector(
-                  "#loader").style.display = "none";
-              document.querySelector(
-                  "body").style.visibility = "visible";
-          }
-      };
-  </script>
   </body>
 </html>

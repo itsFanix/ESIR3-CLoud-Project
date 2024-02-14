@@ -5,7 +5,43 @@
 }   
 
 
-  
+body{
+  padding-top: 25px;
+}
+
+header{
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 35px;
+  margin-bottom: 30px;
+}
+
+input[type=file]::file-selector-button {
+  margin-top: 9px;
+  margin-right: 9px;
+  margin-left: 9px;
+  border: none;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+  border: 1px solid black;
+}
+
+input[type=file]::file-selector-button:hover {
+  background: #0d45a5;
+}
 
 body{
     width: 100%;
@@ -19,6 +55,7 @@ body{
     justify-content: center;
     align-items: center;
 }
+
 
 h1{
     text-align: center;
@@ -56,6 +93,8 @@ label {
     background-color: rgba(248, 246, 246, 0.185);
     display: flex;
     align-items: center;
+    flex-direction: column;
+    justify-content: center;
     
 
 }
@@ -74,7 +113,6 @@ h1, p {
   }
   input{
     width:100%;
-    margin:12px 0 0 0;
     min-height:3em;
     border-radius:5px;
     border:none;
@@ -93,12 +131,7 @@ input[type="text"], input[type="file"]{
   border:none;
 }
 
-input[type="file"] {
-  position: relative;
-  outline: none;
-  padding: 4px;
-  margin: -4px;
-}
+
 form {
 
     display: flex;

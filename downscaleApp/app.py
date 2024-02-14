@@ -74,7 +74,7 @@ def upload():
 
         metadataFile = json_metadata_file_path.split("/")[-1]
         
-        #Pour docker
+        # #Pour docker
         channel.basic_publish(exchange='', routing_key='videoNameQueue', body=metadataFile)
         connection.close()
         return render_template('result.html', video_path=processed_video_path)
