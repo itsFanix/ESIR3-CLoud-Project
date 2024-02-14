@@ -15,3 +15,4 @@ Ce répertoire héberge l'application chargée d'identifier la langue présente 
 Ce répertoire contient l'application responsable de la détection des animaux dans les vidéos et de les afficher dans un tableau avec leur probabilité d'exactitude d'apparition. Il s'agit d'un service de reconnaissance visuelle en se basant sur les modèles d'apprentissage automatique afin d'identifier les animaux.
 
 ### ***videoViewerApp***
+Ce répertoire se concentre sur la récupération et la manipulation des vidéos ainsi que de leurs métadonnées telles que la durée, le langage, les sous-titres et les animaux détectés dans la vidéo à partir du stockage AWS . 
