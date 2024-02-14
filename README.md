@@ -11,4 +11,7 @@ Ce répertoire contient l'application responsable de la réduction de la résolu
 ### ***languageDetectionApp***
 Ce répertoire héberge l'application chargée d'identifier la langue présente dans les vidéos ainsi que générer les sous-titrages. Il s'agit d'un microservice Dockerisé qui utilise un algorithme de traitement du langage naturel pour cette tâche spécifique.
 
-### ***videoViewerApp**
+### ***animaldetectAppp***
+Ce répertoire contient l'application responsable de la détection des animaux dans les vidéos et de les afficher dans un tableau avec leur probabilité d'exactitude d'apparition. Il s'agit d'un service de reconnaissance visuelle en se basant sur les modèles d'apprentissage automatique afin d'identifier les animaux.
+
+### ***videoViewerApp***
